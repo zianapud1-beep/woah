@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isOfficer() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+
+    match /bulletins/{bulletinId} {
+      allow read: if true;
+      allow create: if isOfficer()
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 120
+        && request.resource.data.body is string
+        && request.resource.data.body.size() > 0
+        && request.resource.data.body.size() <= 2000
+        && request.resource.data.audience in ['ALL', 'ZEUS', 'POSEIDON', 'ATHENA', 'APHRODITE'];
+      allow update: if isOfficer()
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 120
+        && request.resource.data.body is string
+        && request.resource.data.body.size() > 0
+        && request.resource.data.body.size() <= 2000
+        && request.resource.data.audience in ['ALL', 'ZEUS', 'POSEIDON', 'ATHENA', 'APHRODITE'];
+      allow delete: if isOfficer();
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "Libertad STE Quizball",
+    "slug": "libertad-ste-quizball",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/app-icon.png",
+    "splash": {
+      "image": "./assets/app-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#101016"
+    },
+    "userInterfaceStyle": "dark",
+    "scheme": "libertadste",
+    "plugins": [
+      "expo-router",
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "DEFAULT"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "ph.edu.libertad.stequizball"
+    },
+    "android": {
+      "package": "ph.edu.libertad.stequizball",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/app-icon.png",
+        "backgroundColor": "#101016"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "name": "Libertad STE Quizball"
+    }
+  }
+}

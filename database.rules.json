@@ -1,0 +1,16 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "quizState": {
+      "public": {
+        ".read": true,
+        ".write": false
+      },
+      "standings": {
+        ".read": true,
+        ".write": false
+      }
+    }
+  }
+}
