@@ -3,7 +3,8 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
-import { HouseSigil, OrnateRule } from './index';
+import { HouseSigil } from './HouseSigil';
+import { OrnateRule } from './OrnatePanel';
 import { alpha, houseTheme, ink, radii, spacing, typography } from '@/styles/theme';
 import { bulletinHouseToId, type BulletinPost } from '@/services/types';
 
