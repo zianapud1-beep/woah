@@ -1,0 +1,21 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "ste2026": {
+      "live": {
+        ".read": true,
+        ".write": true,
+        ".validate": "newData.hasChildren(['questionNumber', 'text', 'type', 'pointValue', 'status', 'correctCount', 'maxWinners', 'standings'])"
+      },
+      "submissions": {
+        ".read": true,
+        ".write": true
+      },
+      "grades": {
+        ".read": true,
+        ".write": true
+      }
+    }
+  }
+}

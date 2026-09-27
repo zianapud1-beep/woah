@@ -1,0 +1,19 @@
+rules_version = '2';
+// STE Quizball weekly bulletins.
+//
+// Open reads so every student device sees the board; writes are validated.
+// TODO (production hardening): gate create/update/delete behind officer auth,
+// e.g. `allow write: if request.auth.token.officer == true;` using Firebase
+// Auth custom claims issued to STE officers.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /bulletins/{bulletinId} {
+      allow read: if true;
+      allow create: if request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.body is string
+        && request.resource.data.body.size() > 0;
+      allow update, delete: if true;
+    }
+  }
+}

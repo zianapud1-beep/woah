@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "STE Quizball — Libertad NHS",
+    "slug": "ste-quizball-app",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "scheme": "stequizball",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0B0E1A"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.libertadnhs.stequizball"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#0B0E1A"
+      },
+      "package": "com.libertadnhs.stequizball"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/icon.png",
+      "name": "STE Quizball — Libertad NHS"
+    },
+    "plugins": ["expo-router", "expo-screen-orientation"],
+    "experiments": {
+      "typedRoutes": false
+    }
+  }
+}
