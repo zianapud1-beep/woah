@@ -1,0 +1,62 @@
+{
+  "rules": {
+    "rules_version": "2",
+    ".read": false,
+    ".write": false,
+
+    "ste_event": {
+      ".read": true,
+
+      "session": {
+        ".read": true,
+
+        ".write": true,
+        ".validate": "newData.hasChildren(['activeQuestion']) || !newData.exists()",
+
+        "secureAnswer": {
+          ".validate": "newData.val() === data.val() || !data.exists()"
+        },
+
+        "correctResponders": {
+          ".validate": "newData.numChildren() <= data.numChildren() + 1"
+        },
+
+        "submissions": {
+          ".validate": "newData.numChildren() <= data.numChildren() + 1"
+        },
+
+        "activeQuestion": {
+          "correctCount": {
+            ".validate": "newData.isNumber() && newData.val() <= 10 && (newData.val() === data.val() || newData.val() === data.val() + 1)"
+          },
+          "submissionCount": {
+            ".validate": "newData.isNumber() && newData.val() <= data.val() + 1"
+          },
+          "index": { ".validate": "newData.val() === data.val() || !data.exists()" },
+          "text": { ".validate": "newData.val() === data.val() || !data.exists()" },
+          "pointValue": { ".validate": "newData.val() === data.val() || !data.exists()" }
+        },
+
+        "housePoints": {
+          "zeus": {
+            ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= data.val() + root.child('ste_event/session/activeQuestion/pointValue').val()"
+          },
+          "poseidon": {
+            ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= data.val() + root.child('ste_event/session/activeQuestion/pointValue').val()"
+          },
+          "athena": {
+            ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= data.val() + root.child('ste_event/session/activeQuestion/pointValue').val()"
+          },
+          "aphrodite": {
+            ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= data.val() + root.child('ste_event/session/activeQuestion/pointValue').val()"
+          }
+        }
+      },
+
+      "_officers": {
+        ".read": false,
+        ".write": false
+      }
+    }
+  }
+}

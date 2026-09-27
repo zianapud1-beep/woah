@@ -1,0 +1,81 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "ste_event": {
+      ".read": true,
+
+      "session": {
+        ".write": false,
+
+        "activeQuestion": {
+          ".read": true,
+          ".write": "root.child('ste_event/_officers').child(auth.uid).val() === true",
+          ".validate": "newData.hasChildren(['id', 'text', 'type', 'pointValue', 'status'])",
+          "text": {
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 400"
+          },
+          "type": {
+            ".validate": "newData.val() === 'MULTIPLE_CHOICE' || newData.val() === 'SHORT_ANSWER'"
+          },
+          "status": {
+            ".validate": "newData.val() === 'IDLE' || newData.val() === 'BUZZERS_OPEN' || newData.val() === 'PAUSED' || newData.val() === 'TIME_UP' || newData.val() === 'ANSWER_REVEALED' || newData.val() === 'CLOSED'"
+          },
+          "pointValue": {
+            ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 200"
+          },
+          "correctCount": {
+            ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10"
+          },
+          "options": {
+            "$option": {
+              ".validate": "newData.hasOnly(['id', 'label'])",
+              "id": { ".validate": "newData.isString() && newData.val().length <= 2" },
+              "label": {
+                ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 120"
+              }
+            }
+          },
+          "revealedAnswer": { ".validate": "newData.isString() || !newData.exists()" },
+          "revealedOptionId": { ".validate": "newData.isString() || !newData.exists()" },
+          "$other": { ".validate": true }
+        },
+
+        "secureAnswer": {
+          ".read": "root.child('ste_event/_officers').child(auth.uid).val() === true",
+          ".write": "root.child('ste_event/_officers').child(auth.uid).val() === true"
+        },
+
+        "housePoints": {
+          ".read": true,
+          ".write": "root.child('ste_event/_officers').child(auth.uid).val() === true",
+          "zeus": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+          "poseidon": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+          "athena": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+          "aphrodite": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+          "$other": { ".validate": false }
+        },
+
+        "correctResponders": { ".write": false, ".validate": false },
+        "submissions": { ".write": false, ".validate": false },
+        "history": {
+          ".read": "root.child('ste_event/_officers').child(auth.uid).val() === true",
+          ".write": "root.child('ste_event/_officers').child(auth.uid).val() === true"
+        },
+        "questionCounter": {
+          ".write": "root.child('ste_event/_officers').child(auth.uid).val() === true",
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "updatedAt": {
+          ".write": "root.child('ste_event/_officers').child(auth.uid).val() === true"
+        }
+      },
+
+      "_officers": {
+        ".read": false,
+        ".write": false
+      }
+    }
+  }
+}

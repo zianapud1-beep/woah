@@ -1,0 +1,42 @@
+rules_version = '2';
+
+// Weekly bulletin board. Public read (every phone in the hall), officer-only
+// writes. The officer console is protected by the device PIN and the
+// `officer` custom claim; see README → "Locking down the officer panel".
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isOfficer() {
+      return request.auth != null
+             && (request.auth.token.officer == true
+                 || request.auth.token.admin == true);
+    }
+
+    match /bulletin_posts/{postId} {
+      allow read: if true;
+      allow create, update, delete: if isOfficer();
+
+      allow create: if request.resource.data.keys()
+                      .hasOnly(['title', 'body', 'house', 'category',
+                                'eventDate', 'pinned', 'createdAt', 'createdBy'])
+                    && request.resource.data.title is string
+                    && request.resource.data.title.size() > 0
+                    && request.resource.data.title.size() <= 140
+                    && request.resource.data.body is string
+                    && request.resource.data.body.size() <= 2000
+                    && request.resource.data.house in
+                         ['ALL', 'ZEUS', 'POSEIDON', 'ATHENA', 'APHRODITE']
+                    && request.resource.data.category in
+                         ['EVENT', 'ANNOUNCEMENT', 'REMINDER', 'RESULT'];
+
+      allow update: if isOfficer()
+                    && request.resource.data.diff(resource.data)
+                         .affectedKeys()
+                         .hasOnly(['pinned', 'title', 'body', 'eventDate']);
+    }
+
+    // Everything else is sealed.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
